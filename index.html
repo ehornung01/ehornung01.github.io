@@ -61,7 +61,7 @@
                     <div id="list" style="overflow:auto; background: #ffb254; border-color: #38d4f0; color: #454542; font-family: 'Signika Negative', sans-serif; font-weight: bold">
                         <div data-bind="foreach: filteredPlaces">
                             <div class="places">
-                                <div data-bind="text: name, click: incrementClickCounter"></div>
+                                <div data-bind="text: name, click: selectPlaces"></div>
                                 <a data-bind="text: url, attr: {src: url, href: url}" style="font-size: 10px; color: #ff3c00 "></a>
                             </div>
                         </div>

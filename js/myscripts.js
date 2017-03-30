@@ -171,8 +171,8 @@ $(window).on("load", function() {
         });
 
         self.clickText = ko.observable('')
-        incrementClickCounter = function(e) {
-            console.log(e.name)
+        selectPlaces = function(e) {
+
             Model.places.forEach(function(place) {
                 place.setAnimation(null)
                 var name = place.name;
@@ -184,7 +184,6 @@ $(window).on("load", function() {
                 };
                 var contentString = '<div class="content">' + name + '</div>' + '</br>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
                 if (e.name == place.name) {
-                    console.log(place.toggleBounce)
                     infowindow.setContent(contentString)
                     infowindow.open(map, place)
                     place.toggleBounce = Model.toggleBounce
