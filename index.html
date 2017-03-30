@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Signika+Negative" rel="stylesheet">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <style>
         html,
         body {
@@ -18,27 +18,27 @@
             padding: 0;
             background: #38d4f0;
         }
-
-
     </style>
 
-    <script>function initMap(search) {
-    var corpus = {
-        lat: 27.800583,
-        lng: -97.396378
-    };
+    <script>
+        function initMap(search) {
+            var corpus = {
+                lat: 27.800583,
+                lng: -97.396378
+            };
 
 
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: corpus,
-        zoom: 14
-        // category: categories
-    });
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: corpus,
+                zoom: 14
+                // category: categories
+            });
 
-    infowindow = new google.maps.InfoWindow();
-    service = new google.maps.places.PlacesService(map);
-    var options = $('option').toArray();
-}</script>
+            infowindow = new google.maps.InfoWindow();
+            service = new google.maps.places.PlacesService(map);
+            var options = $('option').toArray();
+        }
+    </script>
 
 </head>
 
@@ -72,7 +72,6 @@
                 </div>
             </div>
         </div>
-        <!-- <script src="bower_components/jquery/dist/jquery.min.js"></script> -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaOCgYOkJBTWdTeN9Nv-uBCipx-cLA4hc&libraries=places&callback=initMap" async defer></script>
         <script src="js/myscripts.js" async></script>
 

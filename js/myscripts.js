@@ -5,22 +5,13 @@ var url = "https://api.foursquare.com/v2/";
 var searchParam = "venues/search?ll=27.800,-97.396378&radius=500";
 var clientID = "&client_id=U020N4T01S1OVELBUZDS4DXZT02HGTB5RNR4WWJEDIENC0HS";
 var secretID = "&client_secret=&GTF2MZL3D25HPXQ3H4GXNXYEWVFUVBGG55FSXER1VDYEZ2K2";
-// var year = new Date().getFullYear();
-// var month = new Date().getMonth();
-// var day = new Date().getDay()
-// var res = rightNow.toISOString().slice(0, 10).replace(/-/g, "");
+
 var date = '20172703'
-// var authDate = Number(res)
- // var apiLink = url+searchParam+clientID+secretID+'&v='+ date;
-  var apiLink = "https://api.foursquare.com/v2/venues/search?ll=27.800583,-97.396378&radius=500&limit=50&client_id=U020N4T01S1OVELBUZDS4DXZT02HGTB5RNR4WWJEDIENC0HS&client_secret=GTF2MZL3D25HPXQ3H4GXNXYEWVFUVBGG55FSXER1VDYEZ2K2&v=20172703";
+var apiLink = "https://api.foursquare.com/v2/venues/search?ll=27.800583,-97.396378&radius=500&limit=50&client_id=U020N4T01S1OVELBUZDS4DXZT02HGTB5RNR4WWJEDIENC0HS&client_secret=GTF2MZL3D25HPXQ3H4GXNXYEWVFUVBGG55FSXER1VDYEZ2K2&v=20172703";
 
 var infowindow;
 markers = [];
 places = [];
-
-
-
-
 
 function initMap(search) {
     var corpus = {
@@ -39,8 +30,6 @@ function initMap(search) {
     service = new google.maps.places.PlacesService(map);
     var options = $('option').toArray();
 }
-
-
 
 
 Model = {
