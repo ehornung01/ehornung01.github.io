@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Neighborhood Maps</title>
+    <link rel="stylesheet" href="css/retain.css">
+    <script type="text/javascript" src="bower_components/knockout/dist/knockout.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Signika+Negative" rel="stylesheet">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #38d4f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row-fluid">
+            <div class="col-md-12 col-lg-12">
+                <div id="search-control-ui">
+                    <p id="question">What do you want to do in Corpus?</p>
+                    <select data-bind="options: categories, value: filter" id="combo" select="All" style="width: 50%; margin: 20px; padding-bottom: 10px">
+                </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row-fluid">
+            <div class="col-md-12 col-lg-12">
+                <div class="col-md-4 col-sm-12">
+                    <div id="list" style="overflow:auto; background: #ffb254; border-color: #38d4f0; color: #454542; font-family: 'Signika Negative', sans-serif; font-weight: bold">
+                        <div data-bind="foreach: filteredPlaces">
+                            <div class="places">
+                                <div data-bind="text: name, click: incrementClickCounter"></div>
+                                <a data-bind="text: url, attr: {src: url, href: url}" style="font-size: 10px; color: #ff3c00 "></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaOCgYOkJBTWdTeN9Nv-uBCipx-cLA4hc&libraries=places&callback=initMap" async defer></script>
+        <script src="js/minify.js" async></script>
+</body>
+
+</html>
