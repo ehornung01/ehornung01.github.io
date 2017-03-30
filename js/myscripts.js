@@ -1,10 +1,13 @@
+
+
+
 var url = "https://api.foursquare.com/v2/";
 var searchParam = "venues/search?ll=27.800,-97.396378&radius=500";
 var clientID = "&client_id=U020N4T01S1OVELBUZDS4DXZT02HGTB5RNR4WWJEDIENC0HS";
 var secretID = "&client_secret=&GTF2MZL3D25HPXQ3H4GXNXYEWVFUVBGG55FSXER1VDYEZ2K2";
-var year = new Date().getFullYear();
-var month = new Date().getMonth();
-var day = new Date().getDay()
+// var year = new Date().getFullYear();
+// var month = new Date().getMonth();
+// var day = new Date().getDay()
 // var res = rightNow.toISOString().slice(0, 10).replace(/-/g, "");
 var date = '20172703'
 // var authDate = Number(res)
@@ -14,6 +17,20 @@ var date = '20172703'
 var infowindow;
 markers = [];
 places = [];
+
+
+var storage = $.get(apiLink, function(data) {
+            // console.log("Api")
+            Model.markers = data.response.venues
+            Model.markers.forEach(function(place) {
+                Model.createMarker(place)
+                // console.log(data)
+            })
+
+        })
+        .error(function() {
+            alert("API request could not be completed")
+        })
 
 
 function initMap(search) {
@@ -35,6 +52,8 @@ function initMap(search) {
 }
 
 
+
+
 Model = {
 
     // the places property contains an array of marker objects
@@ -43,18 +62,18 @@ Model = {
     markers: window.markers,
 
 
-    fours: $.get(apiLink, function(data) {
-            // console.log("Api")
-            Model.markers = data.response.venues
-            Model.markers.forEach(function(place) {
-                Model.createMarker(place)
-                // console.log(data)
-            })
+    // fours: $.get(apiLink, function(data) {
+    //         // console.log("Api")
+    //         Model.markers = data.response.venues
+    //         Model.markers.forEach(function(place) {
+    //             Model.createMarker(place)
+    //             // console.log(data)
+    //         })
 
-        })
-        .error(function() {
-            alert("API request could not be completed")
-        }),
+    //     })
+    //     .error(function() {
+    //         alert("API request could not be completed")
+    //     }),
 
 
     // searchString is the value generated from the main filter selection which is referenced within the mapView object
@@ -222,3 +241,4 @@ $(window).on("load", function() {
     ko.applyBindings(new ViewModel(Data));
 
 })
+
