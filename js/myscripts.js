@@ -19,18 +19,7 @@ markers = [];
 places = [];
 
 
-var storage = $.get(apiLink, function(data) {
-            // console.log("Api")
-            Model.markers = data.response.venues
-            Model.markers.forEach(function(place) {
-                Model.createMarker(place)
-                // console.log(data)
-            })
 
-        })
-        .error(function() {
-            alert("API request could not be completed")
-        })
 
 
 function initMap(search) {
@@ -62,18 +51,18 @@ Model = {
     markers: window.markers,
 
 
-    // fours: $.get(apiLink, function(data) {
-    //         // console.log("Api")
-    //         Model.markers = data.response.venues
-    //         Model.markers.forEach(function(place) {
-    //             Model.createMarker(place)
-    //             // console.log(data)
-    //         })
+    fours: $.get(apiLink, function(data) {
+            // console.log("Api")
+            Model.markers = data.response.venues
+            Model.markers.forEach(function(place) {
 
-    //     })
-    //     .error(function() {
-    //         alert("API request could not be completed")
-    //     }),
+                // console.log(data)
+            })
+
+        })
+        .error(function() {
+            alert("API request could not be completed")
+        }),
 
 
     // searchString is the value generated from the main filter selection which is referenced within the mapView object
@@ -140,6 +129,13 @@ Model = {
 };
 
 $(window).on("load", function() {
+
+
+        Model.markers.forEach(function(place) {
+            Model.createMarker(place)
+                // console.log(data)
+            })
+
 
     filterMarkers = function(category) {
         for (i = 0; i < Model.places.length; i++) {
