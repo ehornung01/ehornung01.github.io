@@ -213,6 +213,7 @@ $(window).on("load", function() {
                     infowindow.open(map, place);
                     place.toggleBounce = Model.toggleBounce;
                     place.toggleBounce();
+
                 }
             });
         };
