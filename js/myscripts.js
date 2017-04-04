@@ -1,35 +1,14 @@
 
-
-
 var url = "https://api.foursquare.com/v2/";
-var searchParam = "venues/search?ll=27.800,-97.396378&radius=500";
-var clientID = "&client_id=U020N4T01S1OVELBUZDS4DXZT02HGTB5RNR4WWJEDIENC0HS";
-var secretID = "&client_secret=&GTF2MZL3D25HPXQ3H4GXNXYEWVFUVBGG55FSXER1VDYEZ2K2";
+// var searchParam = "venues/search?ll=27.800,-97.396378&radius=500";
+// var clientID = "&client_id=U020N4T01S1OVELBUZDS4DXZT02HGTB5RNR4WWJEDIENC0HS";
+// var secretID = "&client_secret=&GTF2MZL3D25HPXQ3H4GXNXYEWVFUVBGG55FSXER1VDYEZ2K2";
 
-var date = '20172703'
+var date = '20172703';
 var apiLink = "https://api.foursquare.com/v2/venues/search?ll=27.800583,-97.396378&radius=500&limit=50&client_id=U020N4T01S1OVELBUZDS4DXZT02HGTB5RNR4WWJEDIENC0HS&client_secret=GTF2MZL3D25HPXQ3H4GXNXYEWVFUVBGG55FSXER1VDYEZ2K2&v=20172703";
 
 var infowindow;
-markers = [];
-places = [];
 
-function initMap(search) {
-    var corpus = {
-        lat: 27.800583,
-        lng: -97.396378
-    };
-
-
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: corpus,
-        zoom: 14
-        // category: categories
-    });
-
-    infowindow = new google.maps.InfoWindow();
-    service = new google.maps.places.PlacesService(map);
-    var options = $('option').toArray();
-}
 
 
 Model = {
@@ -38,28 +17,29 @@ Model = {
     //Model.fours generates the API call to foursquare where the response delivers the array of objects containing details about each location
     places: [],
     markers: window.markers,
-
-
     fours: $.get(apiLink, function(data) {
             // console.log("Api")
-            Model.markers = data.response.venues
-            Model.markers.forEach(function(place) {
+            Model.markers = data.response.venues;
 
-                // console.log(data)
-            })
+
+            // Model.markers.forEach(function(place) {
+
+            //     // console.log(data)
+            // })
 
         })
         .error(function() {
-            alert("API request could not be completed")
+            alert("API request could not be completed");
         }),
 
 
     // searchString is the value generated from the main filter selection which is referenced within the mapView object
     searchString: function() {
-        return $('#combo').val().toString()
+        return $('#combo').val().toString();
     },
             //Generates marker animation
     toggleBounce: function(e) {
+
         if (this.getAnimation() !== null) {
             this.setAnimation(null);
         } else {
@@ -70,9 +50,8 @@ Model = {
         if (this.getAnimation() === google.maps.Animation.BOUNCE) {
             this.setAnimation(null);
         }
-    }, //Marker creation is called in the API request
+    }, //Marker creation is called on window load
     createMarker: function(place) {
-        console.log(place)
 
         if (place.categories[0]) {
             var placeLat = place.location.lat;
@@ -80,35 +59,40 @@ Model = {
 
             var category = place.categories[0].name;
             var name = place.name;
-            var phone = place.contact.phone
-            var Phone = 'Phone Number'
+            var phone = place.contact.phone;
+            var url = place.url;
+
+            var Phone = 'Phone Number';
             if (!phone) {
-                phone = ''
-                Phone = ''
+                phone = '';
+                Phone = '';
             }
 
-            var contentString = '<div class="content">' + name + '</div>' + '</br>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
+            if(!url){
+                url = '';
+            }
+
+            var contentString = '<div class="content">' + name + '</div>' + '</br>' +'<div>' + url + '</div>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
 
             var marker = new google.maps.Marker({
                 map: map,
-                position: {
-                    lat: placeLat,
-                    lng: placeLng
-                },
+                position: new google.maps.LatLng(placeLat, placeLng),
                 animation: google.maps.Animation.DROP
-
             });
-            marker.addListener('mouseover', Model.toggleBounce)
-            marker.addListener('mouseout', Model.untoggleBounce)
-            marker.name = name
-            marker.phone = phone
-            marker.category = category
+
+            marker.addListener('click', Model.toggleBounce);
+            // marker.addListener('mouseout', Model.untoggleBounce)
+            marker.name = name;
+            marker.phone = phone;
+            marker.category = category;
+            bounds.extend(marker.position);
 
             if (!marker.phone) {
-                marker.phone = ''
+                marker.phone = '';
             }
+
             google.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent(contentString)
+                infowindow.setContent(contentString);
                 infowindow.open(map, this);
             });
 
@@ -120,40 +104,74 @@ Model = {
 $(window).on("load", function() {
 
 
-        Model.markers.forEach(function(place) {
-            Model.createMarker(place)
-                // console.log(data)
-            })
+
+        Model.markers.splice(2,1);
+        Model.markers.splice(3,1);
+        Model.markers.forEach(function(val){
+                if (!val.url) {
+              val.url = '';
+                }
+        });
+        bounds = new google.maps.LatLngBounds();
+
+        Model.markers.forEach(function(val){
+
+            Model.createMarker(val);
+        });
+
+        // Model.markers.forEach(function(place,i) {
+
+        //     Model.markers.forEach(function(place2,j){
+        //         if(i != j){
+
+        //             if (place.location.lat === place2.location.lat){
+
+        //                 console.log(place.location.lat, place2.location.lat, i, j)
+        //                 place2.location.lng +=  .00001
+        //                 console.log(place.location.lat, place2.location.lat, i, j)
+
+        //             }
+        //         }
+        //     })
+        //      Model.createMarker(place)
+        //  })
 
 
-    filterMarkers = function(category) {
+    var filterMarkers = function(category) {
+
+        var filtered =[];
         for (i = 0; i < Model.places.length; i++) {
 
             marker = Model.places[i];
 
-            console.log(marker.category)
+            console.log(marker.category);
             // If is same category or category not picked
             if (marker.category == category || category == "All") {
                 marker.setVisible(true);
+
             }
             // Categories don't match
             else {
                 marker.setVisible(false);
             }
         }
-    }
+    };
 
-    $('#combo').change(function() {
+    $('#combo').on('click', function() {
         // console.log(this.value)
-        filterMarkers(this.value.toString())
-    })
+        console.log("no way");
+
+        filterMarkers(this.value.toString());
+        map.fitBounds(bounds);
+
+    });
 
     var ViewModel = function(data) {
 
         var self = this;
 
         self.categories = ko.observableArray(data.categories);
-        self.places = ko.observableArray(data.places)
+        self.places = ko.observableArray(data.places);
         self.filter = ko.observable('');
 
         self.filteredPlaces = ko.computed(function() {
@@ -170,28 +188,35 @@ $(window).on("load", function() {
             }
         });
 
-        self.clickText = ko.observable('')
-        selectPlaces = function(e) {
+        self.clickText = ko.observable('');
+
+       selectPlaces = function(e) {
 
             Model.places.forEach(function(place) {
-                place.setAnimation(null)
+                place.setAnimation(null);
                 var name = place.name;
-                var phone = place.phone
-                var Phone = 'Phone Number'
+                var phone = place.phone;
+                var url = place.url;
+                var Phone = 'Phone Number';
                 if (!phone) {
-                    phone = ''
-                    Phone = ''
-                };
-                var contentString = '<div class="content">' + name + '</div>' + '</br>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
-                if (e.name == place.name) {
-                    infowindow.setContent(contentString)
-                    infowindow.open(map, place)
-                    place.toggleBounce = Model.toggleBounce
-                    place.toggleBounce()
+                    phone = '';
+                    Phone = '';
                 }
-            })
-        }
-    }
+
+                 if(!url){
+                    url = '';
+                 }
+                 var contentString = '<div class="content">' + name + '</div>' + '</br>' +'<div>' + url + '</div>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
+                 // var contentString = '<div class="content">' + name + '</div>' + '</br>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
+                if (e.name == place.name) {
+                    infowindow.setContent(contentString);
+                    infowindow.open(map, place);
+                    place.toggleBounce = Model.toggleBounce;
+                    place.toggleBounce();
+                }
+            });
+        };
+    };
 
 
     var places = function() {
@@ -199,7 +224,7 @@ $(window).on("load", function() {
         Model.markers.forEach(function(placeItem) {
             placesList.push(placeItem);
         });
-        return placesList
+        return placesList;
     }();
 
     var categories = function() {
@@ -211,18 +236,18 @@ $(window).on("load", function() {
                     result.push(item.categories[0].name);
                 }
             }
-        })
-        return result.sort()
+        });
+        return result.sort();
     }();
 
-    Data = {
+    var Data = {
 
         places: places,
         categories: categories
 
-    }
+    };
 
     ko.applyBindings(new ViewModel(Data));
 
-})
+});
 

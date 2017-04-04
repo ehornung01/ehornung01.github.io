@@ -3,42 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Neighborhood Maps</title>
-    <link rel="stylesheet" href="css/retain.css">
-    <script type="text/javascript" src="bower_components/knockout/dist/knockout.js"></script>
-
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Signika+Negative" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            background: #38d4f0;
+    <link rel="stylesheet" href="css/retain.css">
+
+<script>
+
+        function googleError() {
+            alert('Maps could not load properly')
         }
-    </style>
 
-    <script>
-        function initMap(search) {
-            var corpus = {
-                lat: 27.800583,
-                lng: -97.396378
-            };
-
-
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: corpus,
-                zoom: 14
-                // category: categories
-            });
-
-            infowindow = new google.maps.InfoWindow();
-            service = new google.maps.places.PlacesService(map);
-            var options = $('option').toArray();
-        }
-    </script>
+</script>
 
 </head>
 
@@ -62,7 +38,7 @@
                         <div data-bind="foreach: filteredPlaces">
                             <div class="places">
                                 <div data-bind="text: name, click: selectPlaces"></div>
-                                <a data-bind="text: url, attr: {src: url, href: url}" style="font-size: 10px; color: #ff3c00 "></a>
+                                <!-- <a data-bind="text: url, attr: {src: url, href: url}" style="font-size: 10px; color: #ff3c00 "></a> -->
                             </div>
                         </div>
                     </div>
@@ -72,8 +48,16 @@
                 </div>
             </div>
         </div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaOCgYOkJBTWdTeN9Nv-uBCipx-cLA4hc&libraries=places&callback=initMap" async defer></script>
-        <script src="js/myscripts.js" async></script>
+    </div>
+
+
+
+    <script type="text/javascript" src="bower_components/knockout/dist/knockout.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Signika+Negative" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/myscripts.js"></script>
+    <script src="js/maps.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaOCgYOkJBTWdTeN9Nv-uBCipx-cLA4hc&libraries=places&callback=initMap" onerror="googleError()"></script>
 
 </body>
 
