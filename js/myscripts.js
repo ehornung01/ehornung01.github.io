@@ -39,7 +39,10 @@ Model = {
     },
             //Generates marker animation
     toggleBounce: function(e) {
-
+        console.log(this)
+        Model.places.forEach(function(val){
+            val.setAnimation(null)
+        })
         if (this.getAnimation() !== null) {
             this.setAnimation(null);
         } else {
@@ -64,15 +67,15 @@ Model = {
 
             var Phone = 'Phone Number';
             if (!phone) {
-                phone = '';
+                phone = 'No Phone number Available';
                 Phone = '';
             }
 
             if(!url){
-                url = '';
+                url = 'No Url available';
             }
 
-            var contentString = '<div class="content">' + name + '</div>' + '</br>' +'<div>' + url + '</div>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
+            var contentString = '<div class="content">' + name + '</div>' + '</br>' +'<a href="#">' + url + '</a>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
 
             var marker = new google.maps.Marker({
                 map: map,
@@ -82,6 +85,8 @@ Model = {
 
             marker.addListener('click', Model.toggleBounce);
             // marker.addListener('mouseout', Model.untoggleBounce)
+
+
             marker.name = name;
             marker.phone = phone;
             marker.category = category;
@@ -206,8 +211,9 @@ $(window).on("load", function() {
                  if(!url){
                     url = '';
                  }
-                 var contentString = '<div class="content">' + name + '</div>' + '</br>' +'<div>' + url + '</div>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
-                 // var contentString = '<div class="content">' + name + '</div>' + '</br>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
+
+            var contentString = '<div class="content">' + name + '</div>' + '</br>' +'<a href="#">' + url + '</a>' + '<div class="phone">' + '<div class="number" >' + Phone + '</div>' + phone + '</div>';
+
                 if (e.name == place.name) {
                     infowindow.setContent(contentString);
                     infowindow.open(map, place);
